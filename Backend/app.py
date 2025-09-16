@@ -9,7 +9,6 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-# Load the trained machine learning model
 try:
     diabetes_model = joblib.load('diabetes_model.pkl')
     print("Diabetes prediction model loaded successfully.")
@@ -17,13 +16,7 @@ except FileNotFoundError:
     print("Error: 'diabetes_model.pkl' not found. Please run train_model.py first.")
     diabetes_model = None
 
-# --- Helper function to extract features from text ---
-# This is a VERY simplified parser. A real-world app would use more advanced NLP.
 def extract_features_from_text(text):
-    # Default values for a 'healthy' person. These correspond to the CSV columns.
-    # HighBP, HighChol, CholCheck, BMI, Smoker, Stroke, HeartDiseaseorAttack,
-    # PhysActivity, Fruits, Veggies, HvyAlcoholConsump, AnyHealthcare, NoDocbcCost,
-    # GenHlth, MentHlth, PhysHlth, DiffWalk, Sex, Age, Education, Income
     features = {
         'HighBP': 0, 'HighChol': 0, 'CholCheck': 1, 'BMI': 25, 'Smoker': 0,
         'Stroke': 0, 'HeartDiseaseorAttack': 0, 'PhysActivity': 1, 'Fruits': 1,
@@ -34,7 +27,6 @@ def extract_features_from_text(text):
 
     lower_text = text.lower()
 
-    # Simple keyword-based updates
     if 'high bp' in lower_text or 'high blood pressure' in lower_text:
         features['HighBP'] = 1
     if 'high cholesterol' in lower_text:
@@ -48,44 +40,36 @@ def extract_features_from_text(text):
     if 'no exercise' in lower_text or 'sedentary' in lower_text:
         features['PhysActivity'] = 0
 
-    # Example of extracting a number (BMI)
     try:
         bmi_search = [word for word in lower_text.split() if word.isdigit()]
         if 'bmi' in lower_text and bmi_search:
             features['BMI'] = int(bmi_search[0])
     except:
-        pass # Ignore if BMI extraction fails
+        pass
 
     print(f"Extracted Features: {features}")
-    # Return as a numpy array in the correct order for the model
     return np.array(list(features.values())).reshape(1, -1)
 
-# --- Function to query the local Ollama model ---
 def query_ollama(prompt):
     try:
         response = requests.post(
             'http://localhost:11434/api/generate',
             json={
-                "model": "llama3:latest", # Make sure this matches your model name in Ollama
+                "model": "llama3:latest",
                 "prompt": prompt,
-                "stream": False # We want the full response at once
+                "stream": False
             },
-            timeout=60 # Add a timeout
         )
-        response.raise_for_status() # Raise an exception for bad status codes
+        response.raise_for_status()
 
-        # The response is a JSON object, get the 'response' field
         full_response = response.json().get('response', '')
 
-        # Try to parse the JSON part of the response
-        # We expect the LLM to output a JSON string within its text
         json_start = full_response.find('{')
         json_end = full_response.rfind('}') + 1
         if json_start != -1 and json_end != -1:
             json_str = full_response[json_start:json_end]
             return json.loads(json_str)
         else:
-            # Fallback if JSON is not found
             return {"error": "Failed to parse LLM response.", "raw_response": full_response}
 
     except requests.exceptions.RequestException as e:
