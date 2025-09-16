@@ -3,12 +3,11 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-import joblib # Used to save the model
+import joblib
 
 print("Starting model training...")
 
 # 1. Load the dataset
-# We use the 50/50 split dataset as it's balanced and good for training
 try:
     df = pd.read_csv('diabetes_binary_5050split_health_indicators_BRFSS2015.csv')
     print("Dataset loaded successfully.")
@@ -26,12 +25,12 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 print(f"Data split into {len(X_train)} training samples and {len(X_test)} testing samples.")
 
 # 4. Initialize and train the model
-model = LogisticRegression(max_iter=1000) # Increased max_iter for convergence
+model = LogisticRegression(max_iter=1000)
 print("Training the Logistic Regression model...")
 model.fit(X_train, y_train)
 print("Model training complete.")
 
-# 5. Evaluate the model (optional, but good practice)
+# 5. Evaluate the model
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Model Accuracy on Test Set: {accuracy * 100:.2f}%")
