@@ -1,0 +1,33 @@
+Diebetes
+
+Blood Pressure (BP): 135/88 mmHg
+Cholesterol: 215 mg/dL
+BMI (Body Mass Index): 28.1
+Smoker: No
+History of Stroke: No
+History of Heart Disease: No
+Alcohol Consumption: Low (1-2 drinks per week)
+Veggies Intake: Moderate (2-4 servings per day)
+Fruits Intake: Moderate (1-2 servings per day)
+
+Non - Diebetes
+
+1. HbA1c (Hemoglobin A1c) Test
+This test measures your average blood sugar level over the past 2 to 3 months.
+Normal (Non-Diabetic): Below 5.7%
+Pre-diabetes: 5.7% to 6.4%
+Diabetes: 6.5% or higher
+
+2. Fasting Blood Glucose (FBG) Test
+This test measures your blood sugar after you have not eaten for at least 8 hours.
+Normal (Non-Diabetic): Less than 100 mg/dL
+Pre-diabetes: 100 to 125 mg/dL
+Diabetes: 126 mg/dL or higher
+
+3. Oral Glucose Tolerance Test (OGTT)
+This test measures your blood sugar before and 2 hours after you drink a special sweet drink. It shows how your body processes glucose.
+Normal (Non-Diabetic): Less than 140 mg/dL (after 2 hours)
+Pre-diabetes: 140 to 199 mg/dL (after 2 hours)
+Diabetes: 200 mg/dL or higher (after 2 hours)
+HbA1c: 5.1%
+Fasting Blood Glucose: 92 mg/dL
